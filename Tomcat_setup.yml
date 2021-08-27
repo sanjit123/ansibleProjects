@@ -1,0 +1,25 @@
+--- 
+- 
+  become: true
+  host: localhost
+  name: "install tomcat server"
+  tasks: 
+    - 
+      name: "install java"
+      yum: 
+        name: java
+        state: latest
+    - 
+      get_url: 
+        dest: /usr/local
+        url: "http://mirrors.estointernet.in/apache/tomcat/tomcat-9/v9.0.44/bin/apache-tomcat-9.0.44.tar.gz"
+      name: "download tomcat server packages"
+    - 
+      name: "extract tomcat packages"
+      unarchieve: 
+        dest: /usr/local
+        remote_src: true
+        src: /usr/local/apache-tomcat-9.0.44.tar.gz
+    - 
+      name: "start tomcat services"
+      shell: "nohup /usr/local/apache-tomcat-9.0.44/bin/startup.sh"
